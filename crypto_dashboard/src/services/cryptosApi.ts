@@ -1,8 +1,8 @@
 import API from "./axiosConfig";
 
 import { AxiosError, AxiosResponse } from "axios";
-import { IMessageApi } from "@/interface/api.interface";
-import { IUserCrypto } from "@/interface/userCrypto.interface";
+import { IMessageApi } from "@/interfaces/api.interface";
+import { IUserCrypto } from "@/interfaces/userCrypto.interface";
 
 const config = (token: string) => {
 	return {
@@ -15,16 +15,18 @@ const config = (token: string) => {
 
 export const getUserCryptos = async (
 	token: string
-): Promise<IUserCrypto[] | IMessageApi> => {
-	return API.get("/userCryptos", config(token))
-		.then((response: AxiosResponse) => response.data)
-		.catch((error: AxiosError) => {
-			if (error.response?.data) {
-				return error.response.data as IMessageApi;
-			} else {
-				return { message: "An internal error occurred" };
-			}
-		});
+): Promise<AxiosResponse<IUserCrypto[]>> => {
+	return API.get("/userCryptos", config(token));
+	// .then((response: AxiosResponse) => response.data)
+	// .catch((error: AxiosError) => {
+	// 	if (error.response?.data) {
+	// 		console.log(error.response.data as IMessageApi);
+	// 	} else {
+	// 		console.log({ message: "An internal error occurred" });
+	// 	}
+
+	// 	return [];
+	// });
 };
 
 export const newUserCrypto = async (
@@ -46,7 +48,7 @@ export const deleteUserCrypto = async (
 	token: string,
 	idUserCrypto: number
 ): Promise<IMessageApi> => {
-	return API.post(`/userCryptos/${idUserCrypto}`, config(token))
+	return API.delete(`/userCryptos/${idUserCrypto}`, config(token))
 		.then((response: AxiosResponse) => response.data as IMessageApi)
 		.catch((error: AxiosError) => {
 			if (error.response?.data) {

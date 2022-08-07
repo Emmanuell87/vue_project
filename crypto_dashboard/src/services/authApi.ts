@@ -1,7 +1,7 @@
 import API from "./axiosConfig";
 
 import { AxiosError, AxiosResponse } from "axios";
-import { IUser, IMessageApi } from "@/interface/api.interface";
+import { IUser, IMessageApi } from "@/interfaces/api.interface";
 
 const config = {
 	headers: {

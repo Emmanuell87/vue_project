@@ -12,13 +12,13 @@ const store = createStore({
 				name: "Bitcoin",
 			},
 		],
-		token: localStorage.getItem("vue-crypto-currencies-new")
-			? localStorage.getItem("vue-crypto-currencies-new")
+		token: localStorage.getItem("token")
+			? JSON.parse(localStorage.getItem("token") || "")
 			: null,
 	},
 	getters: {
-		getSymbolById: (state) => (symbol: string) => {
-			return state.coins.find((s) => s.symbol === symbol);
+		getToken: (state) => () => {
+			return state.token;
 		},
 	},
 	mutations: {
