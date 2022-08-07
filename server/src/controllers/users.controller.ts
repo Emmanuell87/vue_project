@@ -10,7 +10,7 @@ export const signUp: Handler = async (req, res) => {
 	};
 	const db = await connect();
 	db.query(
-		"INSERT INTO users (email, password, rol) VALUES (?, ?)",
+		"INSERT INTO users (email, password) VALUES (?, ?)",
 		Object.values(user)
 	)
 		.then(() => {

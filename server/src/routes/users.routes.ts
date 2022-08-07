@@ -9,3 +9,5 @@ const router = Router();
 
 router.post("/signUp", checkSchema_UsersSignUp, signUp);
 router.post("/signIn", checkSchema_UsersSignIn, signIn);
+
+export default router;

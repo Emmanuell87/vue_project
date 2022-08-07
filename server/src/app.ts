@@ -5,6 +5,7 @@ import passport from "passport";
 import passportMiddleware from "./middlewares/passport.middleware";
 
 //routes
+import usersRoutes from "./routes/users.routes";
 
 export class App {
 	private app: Application;
@@ -19,6 +20,8 @@ export class App {
 	middlewares(): void {
 		this.app.use(cors());
 		this.app.use(morgan("dev"));
+		this.app.use(express.json());
+		this.app.use(express.urlencoded({ extended: true }));
 		this.app.use(passport.initialize());
 		passport.use(passportMiddleware);
 	}
@@ -27,7 +30,9 @@ export class App {
 		this.app.set("port", process.env.PORT || this.port || 3000);
 	}
 
-	routes(): void {}
+	routes(): void {
+		this.app.use(usersRoutes);
+	}
 
 	listen(): void {
 		this.app.listen(this.app.get("port"), () => {
