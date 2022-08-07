@@ -12,7 +12,6 @@ import {
 } from "../services/bcrypt.services";
 
 export const validate = (validations: ValidationChain[]) => {
-	console.log("dentro");
 	return async (req: Request, res: Response, next: NextFunction) => {
 		for (let validation of validations) {
 			const result = await validation.run(req);
@@ -144,6 +143,45 @@ export const checkSchema_UsersSignIn = validate([
 						return Promise.reject("Contraseña incorrecta");
 					}
 				},
+			},
+		},
+	}),
+]);
+
+export const checkSchema_userCrypto = validate([
+	...checkSchema({
+		cid: {
+			isEmpty: {
+				errorMessage: "Por favor envíe el cid de la cryptomoneda",
+				negated: true,
+			},
+			isInt: {
+				errorMessage: "El cid debe ser un entero",
+			},
+			toInt: true,
+		},
+		symbol: {
+			isEmpty: {
+				errorMessage: "Por favor envíe el symbol de la cryptomoneda",
+				negated: true,
+			},
+		},
+		base: {
+			isEmpty: {
+				errorMessage: "Por favor envíe la base de la cryptomoneda",
+				negated: true,
+			},
+		},
+		quote: {
+			isEmpty: {
+				errorMessage: "Por favor envíe la quote de la cryptomoneda",
+				negated: true,
+			},
+		},
+		name: {
+			isEmpty: {
+				errorMessage: "Por favor envíe el name de la cryptomoneda",
+				negated: true,
 			},
 		},
 	}),

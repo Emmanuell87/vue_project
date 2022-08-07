@@ -6,6 +6,7 @@ import passportMiddleware from "./middlewares/passport.middleware";
 
 //routes
 import usersRoutes from "./routes/users.routes";
+import cryptosRoutes from "./routes/cryptos.routes";
 
 export class App {
 	private app: Application;
@@ -32,6 +33,7 @@ export class App {
 
 	routes(): void {
 		this.app.use(usersRoutes);
+		this.app.use(cryptosRoutes);
 	}
 
 	listen(): void {
