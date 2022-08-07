@@ -1,6 +1,8 @@
 import express, { Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
+import passport from "passport";
+import passportMiddleware from "./middlewares/passport.middleware";
 
 //routes
 
@@ -17,6 +19,8 @@ export class App {
 	middlewares(): void {
 		this.app.use(cors());
 		this.app.use(morgan("dev"));
+		this.app.use(passport.initialize());
+		passport.use(passportMiddleware);
 	}
 
 	settings(): void {
