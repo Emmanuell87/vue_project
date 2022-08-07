@@ -11,6 +11,7 @@ export class App {
 		this.app = express();
 		this.settings();
 		this.middlewares();
+		this.routes();
 	}
 
 	middlewares(): void {
@@ -21,6 +22,8 @@ export class App {
 	settings(): void {
 		this.app.set("port", process.env.PORT || this.port || 3000);
 	}
+
+	routes(): void {}
 
 	listen(): void {
 		this.app.listen(this.app.get("port"), () => {
