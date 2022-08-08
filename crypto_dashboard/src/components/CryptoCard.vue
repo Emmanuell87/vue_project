@@ -71,28 +71,16 @@
 						<span class="text-dark">{{ ticker.vol }}</span>
 					</div>
 				</div>
-			</div>
-			<!-- <div class="mt-5">
-				<h3 class="heading">Senior Product<br />Designer-Singapore</h3>
-				<div class="mt-5">
-					<div class="progress">
-						<div
-							class="progress-bar"
-							role="progressbar"
-							style="width: 50%"
-							aria-valuenow="50"
-							aria-valuemin="0"
-							aria-valuemax="100"
-						></div>
-					</div>
-					<div class="mt-3">
-						<span class="text1"
-							>32 Applied
-							<span class="text2">of 50 capacity</span></span
-						>
-					</div>
+				<div class="position-absolute" style="top: 0; right: 0">
+					<b-button
+						variant="danger"
+						class="p-0 px-1 mt-1 me-1 rounded-circle"
+						@click="deleteCoin"
+					>
+						<fa icon="xmark"
+					/></b-button>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </template>
@@ -101,6 +89,10 @@
 import { IUserCrypto } from "../interfaces/userCrypto.interface";
 import { defineComponent, PropType } from "vue";
 import { ITicker } from "../interfaces/ticker.interface";
+import { deleteUserCrypto } from "../services/cryptosApi";
+import store from "../store";
+
+const sockets = store.state.sockets;
 
 export default defineComponent({
 	name: "crypto-card",
@@ -112,6 +104,18 @@ export default defineComponent({
 		ticker: {
 			required: true,
 			type: Object as PropType<ITicker>,
+		},
+	},
+	methods: {
+		async deleteCoin() {
+			try {
+				console.log("object");
+				sockets.unSubscribe(this.userCrypto.symbol);
+				await deleteUserCrypto(this.userCrypto.id as number);
+				store.dispatch("fetchUserCryptos");
+			} catch (error) {
+				console.log(error);
+			}
 		},
 	},
 	data() {

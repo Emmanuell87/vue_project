@@ -1,7 +1,7 @@
 <template>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<div class="container">
-			<router-link class="navbar-brand" to="/">Cryptos MEVN</router-link>
+			<router-link class="navbar-brand" to="/">Cryptos</router-link>
 			<button
 				class="navbar-toggler"
 				type="button"

@@ -1,22 +1,26 @@
 import API from "./axiosConfig";
 
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse, AxiosProxyConfig } from "axios";
 import { IMessageApi } from "@/interfaces/api.interface";
 import { IUserCrypto } from "@/interfaces/userCrypto.interface";
 import store from "../store";
 import { TInfoCryptos } from "@/interfaces/infoCryptos";
 
-const config = {
-	headers: {
-		enctype: "application/x-www-form-urlencoded",
-		Authorization: `Bearer ${store.state.token}`,
-	},
+const token = localStorage.getItem("token");
+
+const config = (token: string) => {
+	return {
+		headers: {
+			enctype: "application/x-www-form-urlencoded",
+			Authorization: `Bearer ${token}`,
+		},
+	};
 };
 
 export const getUserCryptos = async (): Promise<
 	AxiosResponse<IUserCrypto[]>
 > => {
-	return API.get("/userCryptos", config);
+	return API.get("/userCryptos", config(store.state.token as string));
 	// .then((response: AxiosResponse) => response.data)
 	// .catch((error: AxiosError) => {
 	// 	if (error.response?.data) {
@@ -29,34 +33,23 @@ export const getUserCryptos = async (): Promise<
 	// });
 };
 
-export const getInfoCryptos = async (): Promise<TInfoCryptos> => {
-	return API.get("/infoCryptos", config);
+export const getInfoCryptos = async (): Promise<
+	AxiosResponse<TInfoCryptos>
+> => {
+	return API.get("/infoCryptos", config(store.state.token as string));
 };
 
 export const newUserCrypto = async (
 	data: IUserCrypto
-): Promise<IMessageApi> => {
-	return API.post("/userCryptos", data, config)
-		.then((response: AxiosResponse) => response.data as IMessageApi)
-		.catch((error: AxiosError) => {
-			if (error.response?.data) {
-				return error.response.data as IMessageApi;
-			} else {
-				return { message: "An internal error occurred" };
-			}
-		});
+): Promise<AxiosResponse<IMessageApi>> => {
+	return API.post("/userCryptos", data, config(store.state.token as string));
 };
 
 export const deleteUserCrypto = async (
 	idUserCrypto: number
-): Promise<IMessageApi> => {
-	return API.delete(`/userCryptos/${idUserCrypto}`, config)
-		.then((response: AxiosResponse) => response.data as IMessageApi)
-		.catch((error: AxiosError) => {
-			if (error.response?.data) {
-				return error.response.data as IMessageApi;
-			} else {
-				return { message: "An internal error occurred" };
-			}
-		});
+): Promise<AxiosResponse<IMessageApi>> => {
+	return API.delete(
+		`/userCryptos/${idUserCrypto}`,
+		config(store.state.token as string)
+	);
 };

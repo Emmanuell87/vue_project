@@ -21,36 +21,19 @@ import { getUserCryptos } from "../services/cryptosApi";
 import { defineComponent } from "vue";
 import CryptoCard from "./CryptoCard.vue";
 import { mapState } from "vuex";
-import Sockets from "../services/apiBinance";
+// import Sockets from "../services/apiBinance";
+import store from "../store";
 
-const sockets = new Sockets();
+const sockets = store.state.sockets;
 
 export default defineComponent({
 	name: "crypto-list",
-	data() {
-		return {
-			userCryptos: [] as IUserCrypto[],
-		};
-	},
-	methods: {
-		async loadUserCryptos() {
-			try {
-				const res = await getUserCryptos();
-				this.userCryptos = res.data;
-				res.data.forEach((userCrypto) => {
-					sockets.subscribe(userCrypto.symbol);
-				});
-				console.log(res);
-			} catch (error) {
-				console.error(error);
-			}
-		},
-	},
+	methods: {},
 	mounted() {
-		this.loadUserCryptos();
+		store.dispatch("fetchUserCryptos");
 	},
 	computed: {
-		...mapState(["tickers"]),
+		...mapState(["tickers", "userCryptos"]),
 	},
 	components: { CryptoCard },
 });

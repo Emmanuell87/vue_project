@@ -1,14 +1,14 @@
+export type TPairs = {
+	cid: 1;
+	value: string;
+	name: string;
+	label: string;
+};
+
 interface InfoCryptos {
 	cid: number;
 	name: string;
-	pairs: [
-		{
-			cid: 1;
-			value: string;
-			name: string;
-			label: string;
-		}
-	];
+	pairs: TPairs[];
 }
 
 export type TInfoCryptos = {

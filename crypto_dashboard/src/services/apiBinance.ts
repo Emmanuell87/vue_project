@@ -1,28 +1,37 @@
 // import WebSocket = require("ws");
 
+type ISubscription = {
+	[cryptoSymbol: string]: WebSocket;
+};
+
 import store from "../store";
 export default class sockets {
 	private baseUrl: string;
-	private subscription: any = {};
+	private subscription = {} as ISubscription;
 
 	constructor() {
 		this.baseUrl = "wss://stream.binance.com:9443/ws";
 	}
 
 	subscribe(cryptoSymbol: string): void {
-		const body = {
-			method: "SUBSCRIBE",
-			params: [`${cryptoSymbol.toLowerCase()}@ticker`],
-			id: 1,
-		};
-		const ws = new WebSocket(this.baseUrl);
-		ws.onopen = function (this, ev) {
-			ws.send(JSON.stringify(body));
-		};
+		let ws: WebSocket;
+		if (this.subscription[cryptoSymbol]) {
+			ws = this.subscription[cryptoSymbol];
+		} else {
+			const body = {
+				method: "SUBSCRIBE",
+				params: [`${cryptoSymbol.toLowerCase()}@ticker`],
+				id: 1,
+			};
+			ws = new WebSocket(this.baseUrl);
+			ws.onopen = function (this, ev) {
+				ws.send(JSON.stringify(body));
+			};
+			this.subscription[cryptoSymbol] = ws;
+		}
 
 		ws.onmessage = function (this, ev) {
 			const ticker = JSON.parse(ev.data);
-			console.log(ev.data);
 			if (ticker) {
 				const tick = {
 					price: parseFloat(ticker.c),
@@ -38,13 +47,11 @@ export default class sockets {
 				store.commit("SET_SOCKETS", tick);
 			}
 		};
-
-		this.subscription["btcbusd"] = ws;
 	}
 
-	unSubscribe(): void {
-		const ws = this.subscription["btcbusd"];
+	unSubscribe(cryptoSymbol: string): void {
+		const ws = this.subscription[cryptoSymbol];
 		ws.close(1000, "");
-		delete this.subscription["btcbusd"];
+		// delete this.subscription[cryptoSymbol];
 	}
 }

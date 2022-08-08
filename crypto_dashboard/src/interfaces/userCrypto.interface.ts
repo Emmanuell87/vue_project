@@ -1,6 +1,6 @@
 export interface IUserCrypto {
 	id?: number;
-	assignedToUser: string;
+	assignedToUser?: string;
 	cid: number;
 	symbol: string;
 	base: string;
