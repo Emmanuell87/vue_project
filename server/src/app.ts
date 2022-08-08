@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import passport from "passport";
 import passportMiddleware from "./middlewares/passport.middleware";
+import path from "path";
 
 //routes
 import usersRoutes from "./routes/users.routes";
@@ -23,6 +24,7 @@ export class App {
 		this.app.use(morgan("dev"));
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
+		this.app.use(express.static(path.join(__dirname, "..", "..", "dist")));
 		this.app.use(passport.initialize());
 		passport.use(passportMiddleware);
 	}
