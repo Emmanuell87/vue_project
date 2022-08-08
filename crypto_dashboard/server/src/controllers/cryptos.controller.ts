@@ -2,6 +2,7 @@ import { Handler } from "express";
 import { connect } from "../database";
 import { ICrypto } from "../interface/cryptos.interface";
 import { IUser } from "../interface/users.interface";
+import infoCryptos from "../infoCrypto.json";
 
 export const getUserCryptos: Handler = async (req, res) => {
 	const user = req.user as IUser;
@@ -19,6 +20,10 @@ export const getUserCryptos: Handler = async (req, res) => {
 		.then(() => {
 			db.end();
 		});
+};
+
+export const getInfoCryptos: Handler = async (req, res) => {
+	res.status(200).json(infoCryptos);
 };
 
 export const newUserCrypto: Handler = async (req, res) => {

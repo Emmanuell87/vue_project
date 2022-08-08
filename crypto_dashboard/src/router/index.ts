@@ -6,6 +6,11 @@ const routes: RouteRecordRaw[] = [
 		name: "cryptos",
 		component: () => import("@/components/CryptoList.vue"),
 	},
+	{
+		path: "/crypto/new",
+		name: "CryptoForm",
+		component: () => import("@/components/CryptoForm.vue"),
+	},
 ];
 
 const router = createRouter({

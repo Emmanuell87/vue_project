@@ -3,6 +3,7 @@ import {
 	getUserCryptos,
 	newUserCrypto,
 	deleteUserCrypto,
+	getInfoCryptos,
 } from "../controllers/cryptos.controller";
 import passport from "passport";
 import { checkSchema_userCrypto } from "../middlewares/validator.middleware";
@@ -14,6 +15,8 @@ router.get(
 	passport.authenticate("jwt", { session: false }),
 	getUserCryptos
 );
+
+router.get("/infoCryptos", getInfoCryptos);
 
 router.post(
 	"/userCryptos",

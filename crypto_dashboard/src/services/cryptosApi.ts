@@ -4,6 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { IMessageApi } from "@/interfaces/api.interface";
 import { IUserCrypto } from "@/interfaces/userCrypto.interface";
 import store from "../store";
+import { TInfoCryptos } from "@/interfaces/infoCryptos";
 
 const config = {
 	headers: {
@@ -26,6 +27,10 @@ export const getUserCryptos = async (): Promise<
 
 	// 	return [];
 	// });
+};
+
+export const getInfoCryptos = async (): Promise<TInfoCryptos> => {
+	return API.get("/infoCryptos", config);
 };
 
 export const newUserCrypto = async (
