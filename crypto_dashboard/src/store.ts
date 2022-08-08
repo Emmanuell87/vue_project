@@ -1,4 +1,9 @@
 import { createStore } from "vuex";
+import { ITicker } from "./interfaces/ticker.interface";
+
+type ITickers = {
+	[symbol: string]: ITicker;
+};
 
 const store = createStore({
 	strict: true,
@@ -12,6 +17,7 @@ const store = createStore({
 				name: "Bitcoin",
 			},
 		],
+		tickers: {} as ITickers,
 		token: localStorage.getItem("token")
 			? JSON.parse(localStorage.getItem("token") || "")
 			: null,
@@ -22,11 +28,11 @@ const store = createStore({
 		},
 	},
 	mutations: {
-		SET_TOKEN: () => {
-			("");
-		},
-		SET_SOCKETS: () => {
-			("");
+		SET_SOCKETS: (state, payload) => {
+			const tick = state.tickers[payload.symbol];
+			payload.pchg = tick ? (payload.price > tick.price ? 1 : -1) : 1;
+			state.tickers[payload.symbol] = payload;
+			console.log(state.tickers);
 		},
 		ADD_COIN: () => {
 			("");

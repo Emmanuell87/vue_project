@@ -1,33 +1,45 @@
 <template>
-	<ul class="list-group">
-		<li
-			class="list-group-item list-group-item-action p-4"
-			style="cursor: pointer"
-			v-for="(userCrypto, index) in userCryptos"
-			:key="index"
-		>
-			{{ userCrypto.name }}
-		</li>
-	</ul>
+	<div class="container mt-5 mb-3">
+		<div class="row">
+			<div
+				class="col-sm-4"
+				v-for="(userCrypto, index) in userCryptos"
+				:key="index"
+			>
+				<CryptoCard
+					:userCrypto="userCrypto"
+					:ticker="tickers[userCrypto.symbol] || {}"
+				/>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
 import { IUserCrypto } from "../interfaces/userCrypto.interface";
 import { getUserCryptos } from "../services/cryptosApi";
 import { defineComponent } from "vue";
+import CryptoCard from "./CryptoCard.vue";
+import { mapState } from "vuex";
+import Sockets from "../services/apiBinance";
+
+const sockets = new Sockets();
+
 export default defineComponent({
 	name: "crypto-list",
 	data() {
 		return {
 			userCryptos: [] as IUserCrypto[],
-			token: "",
 		};
 	},
 	methods: {
 		async loadUserCryptos() {
 			try {
-				const res = await getUserCryptos(this.token);
+				const res = await getUserCryptos();
 				this.userCryptos = res.data;
+				res.data.forEach((userCrypto) => {
+					sockets.subscribe(userCrypto.symbol);
+				});
 				console.log(res);
 			} catch (error) {
 				console.error(error);
@@ -35,8 +47,11 @@ export default defineComponent({
 		},
 	},
 	mounted() {
-		this.token = this.$store.getters.getToken();
 		this.loadUserCryptos();
 	},
+	computed: {
+		...mapState(["tickers"]),
+	},
+	components: { CryptoCard },
 });
 </script>
