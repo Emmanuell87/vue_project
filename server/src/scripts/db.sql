@@ -8,14 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (email)
-)
-
-
-    "cid": 1,
-    "symbol": "BTCUSDT",
-    "base": "BTC",
-    "quote": "USDT",
-    "name": "Bitcoin"
+);
 
 CREATE TABLE IF NOT EXISTS userCryptos (
     id INT NOT NULL AUTO_INCREMENT,
@@ -28,4 +21,4 @@ CREATE TABLE IF NOT EXISTS userCryptos (
 
     PRIMARY KEY (id),
     CONSTRAINT FOREIGN KEY (assignedToUser) REFERENCES users(email) ON DELETE CASCADE
-)
+);

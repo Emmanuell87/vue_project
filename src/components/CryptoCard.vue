@@ -109,7 +109,6 @@ export default defineComponent({
 	methods: {
 		async deleteCoin() {
 			try {
-				console.log("object");
 				sockets.unSubscribe(this.userCrypto.symbol);
 				await deleteUserCrypto(this.userCrypto.id as number);
 				store.dispatch("fetchUserCryptos");

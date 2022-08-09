@@ -34,7 +34,6 @@ const store = createStore({
 		},
 		UPDATE_TOKEN: (state, newToken) => {
 			localStorage.setItem("token", newToken);
-			console.log(newToken);
 			state.token = newToken;
 		},
 	},

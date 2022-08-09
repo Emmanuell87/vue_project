@@ -21,16 +21,6 @@ export const getUserCryptos = async (): Promise<
 	AxiosResponse<IUserCrypto[]>
 > => {
 	return API.get("/userCryptos", config(store.state.token as string));
-	// .then((response: AxiosResponse) => response.data)
-	// .catch((error: AxiosError) => {
-	// 	if (error.response?.data) {
-	// 		console.log(error.response.data as IMessageApi);
-	// 	} else {
-	// 		console.log({ message: "An internal error occurred" });
-	// 	}
-
-	// 	return [];
-	// });
 };
 
 export const getInfoCryptos = async (): Promise<

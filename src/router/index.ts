@@ -30,9 +30,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	console.log(to.fullPath);
 	if (to.fullPath === "/" || to.fullPath === "/crypto/new") {
-		console.log("aaaaaaaaaaaa");
 		if (!store.state.token) {
 			next("/login");
 		}

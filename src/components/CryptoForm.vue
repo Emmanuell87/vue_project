@@ -58,11 +58,8 @@ export default defineComponent({
 		async loadInfoCryptos() {
 			try {
 				const res = await getInfoCryptos();
-				// console.log(object)
-				// console.log(res.data[this.quote]["pairs"]);
 				this.infoCryptos = res.data;
 				this.keys = Object.keys(res.data);
-				// console.log(this.infoCryptos[this.quote]["pairs"]);
 			} catch (error) {
 				console.error(error);
 			}
@@ -70,7 +67,6 @@ export default defineComponent({
 
 		async addCoin() {
 			if (Object.keys(this.selectedCoin).length !== 0) {
-				console.log("asdf", this.selectedCoin);
 				const symbol = `${this.selectedCoin.value}${this.quote}`;
 				const userCrypto = {
 					symbol: symbol,
@@ -84,14 +80,12 @@ export default defineComponent({
 		},
 	},
 	mounted() {
-		console.log(this.infoCryptos);
 		this.loadInfoCryptos();
 	},
 	computed: {
 		getPairs(): TPairs[] {
 			// return this.infoCryptos[this.quote]["pairs"];
 			if (Object.keys(this.infoCryptos).length !== 0) {
-				console.log(this.infoCryptos[this.quote]["pairs"]);
 				const pairs = this.infoCryptos[this.quote]["pairs"];
 				return pairs;
 				// return this.infoCryptos[this.quote].pairs;
