@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://34.125.32.240";
+const url = "https://emmanuel-cryptos-backend.herokuapp.com";
 
 const API = axios.create({
 	baseURL: url,

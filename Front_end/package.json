@@ -2,11 +2,14 @@
 	"name": "crypto_dashboard",
 	"version": "0.1.0",
 	"private": true,
+	"engines": {
+		"node": "16.13.1",
+		"npm": "8.1.2"
+	},
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "npm run build --prefix server && vue-cli-service build",
-		"lint": "vue-cli-service lint",
-		"start": "npm start --prefix server"
+		"start": "vue-cli-service --optimize_for_size --max_old_space_size=460 serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.1.2",

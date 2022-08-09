@@ -50,7 +50,7 @@ export default defineComponent({
 			infoCryptos: {} as TInfoCryptos,
 			keys: [] as string[],
 			selectedCoin: {} as TPairs,
-			quote: "BNB" as string,
+			quote: "BUSD" as string,
 		};
 	},
 	// components: { Multiselect },
@@ -76,6 +76,7 @@ export default defineComponent({
 					cid: this.selectedCoin.cid,
 				};
 				await newUserCrypto(userCrypto);
+				this.$router.push({ path: "/" });
 			}
 		},
 	},
